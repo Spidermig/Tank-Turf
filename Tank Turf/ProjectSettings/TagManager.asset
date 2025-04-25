@@ -7,6 +7,7 @@ TagManager:
   - PlayerBullet
   - EnemyBullet
   - EnemyTank
+  - PlayerTank
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - UI
   - EnemyBullet
   - EnemyTank
-  - 
+  - PlayerTank
   - PlayerBullet
   - 
   - 
