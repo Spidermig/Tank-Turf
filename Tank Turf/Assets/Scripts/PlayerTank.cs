@@ -90,9 +90,10 @@ public class PlayerTank : MonoBehaviour
     }
     */
 
-    /*
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        /*
         if (collision.gameObject.CompareTag("EnemyBullet"))
         {
             _rigidbody.velocity = Vector3.zero;
@@ -102,6 +103,17 @@ public class PlayerTank : MonoBehaviour
 
             FindObjectOfType<GameManager>().PlayerDied();
         }
+        */
+
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            _rigidbody.velocity = Vector3.zero;
+            _rigidbody.angularVelocity = 0.0f;
+
+            //this.gameObject.SetActive(false);
+            Debug.Log("Hitting wall");
+
+            //FindObjectOfType<GameManager>().PlayerDied();
+        }
     }
-    */
 }

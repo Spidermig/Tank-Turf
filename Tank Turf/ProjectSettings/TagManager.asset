@@ -8,6 +8,7 @@ TagManager:
   - EnemyBullet
   - EnemyTank
   - PlayerTank
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - EnemyTank
   - PlayerTank
   - PlayerBullet
-  - 
+  - Wall
   - 
   - 
   - 
