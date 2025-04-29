@@ -53,15 +53,9 @@ public class Bullet : MonoBehaviour
         {
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.angularVelocity = 0.0f;
-
-            this.gameObject.SetActive(false);
+            Destroy(this.gameObject, this.maxLifeTime);
 
             //FindObjectOfType<GameManager>().PlayerDied();
-        }
-
-        if (collision.gameObject.CompareTag("PlayerTank"))
-        {
-            Destroy(this.gameObject, 0.0f);
         }
     }
 }
