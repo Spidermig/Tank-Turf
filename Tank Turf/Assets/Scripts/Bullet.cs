@@ -10,6 +10,8 @@ public class Bullet : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
 
+    private bool hasRicocheted = false;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -18,21 +20,33 @@ public class Bullet : MonoBehaviour
     public void Project(Vector2 direction)
     {
         _rigidbody.AddForce(direction * this.speed);
-
-        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
-            _rigidbody.velocity = Vector3.zero;
-            _rigidbody.angularVelocity = 0.0f;
-            Destroy(this.gameObject, this.maxLifeTime);
+            if (!hasRicocheted)
+            {
+                //_rigidbody.velocity = Vector3.zero;
+                //_rigidbody.angularVelocity = 0.0f;
 
-            Debug.Log("Hitting wall");
+                Vector2 reflectDir = Vector2.Reflect(_rigidbody.velocity.normalized, collision.contacts[0].normal);
+                //_rigidbody.velocity = reflectDir * 200.0f;
+                _rigidbody.AddForce(reflectDir * this.speed);
+                hasRicocheted = true;
+                Destroy(this.gameObject, this.maxLifeTime);
 
-            //FindObjectOfType<GameManager>().PlayerDied();
+                Debug.Log("Hitting wall");
+
+                //FindObjectOfType<GameManager>().PlayerDied();
+            }
+            else
+            {
+                Vector2 reflectDir = Vector2.Reflect(_rigidbody.velocity.normalized, collision.contacts[0].normal);
+                //_rigidbody.velocity = reflectDir * 200.0f;
+                _rigidbody.AddForce(reflectDir * this.speed);
+            }
         }
 
         if (collision.gameObject.CompareTag("EnemyTank"))
@@ -43,6 +57,11 @@ public class Bullet : MonoBehaviour
             this.gameObject.SetActive(false);
 
             //FindObjectOfType<GameManager>().PlayerDied();
+        }
+
+        if (collision.gameObject.CompareTag("PlayerTank"))
+        {
+            Destroy(this.gameObject, 0.0f);
         }
     }
 }

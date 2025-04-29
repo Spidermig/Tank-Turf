@@ -85,7 +85,7 @@ public class PlayerTank : MonoBehaviour
 
     private void Shoot()
     {
-        Bullet playerBullet = Instantiate(this.playerBulletPrefab, this.transform.position + (transform.up * 0.5f), this.transform.rotation);
+        Bullet playerBullet = Instantiate(this.playerBulletPrefab, this.transform.position + (transform.up * 1.0f), this.transform.rotation);
         playerBullet.Project(this.transform.up);
     }
 
