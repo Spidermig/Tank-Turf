@@ -6,7 +6,6 @@ public class PowerUps : MonoBehaviour
 {
     [Header("Inscribed")]
     public Sprite[] powerUpSprites;
-    //public int numPlayerTanks = 3;
 
     // Start is called before the first frame update
     void Start()
