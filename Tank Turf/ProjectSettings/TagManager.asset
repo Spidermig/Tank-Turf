@@ -9,6 +9,7 @@ TagManager:
   - EnemyTank
   - PlayerTank
   - Wall
+  - PowerUp
   layers:
   - Default
   - TransparentFX
