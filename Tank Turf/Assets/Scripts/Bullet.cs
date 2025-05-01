@@ -37,7 +37,7 @@ public class Bullet : MonoBehaviour
                 hasRicocheted = true;
                 Destroy(this.gameObject, this.maxLifeTime);
 
-                Debug.Log("Hitting wall");
+                //Debug.Log("Hitting wall");
 
                 //FindObjectOfType<GameManager>().PlayerDied();
             }
@@ -53,7 +53,7 @@ public class Bullet : MonoBehaviour
         {
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.angularVelocity = 0.0f;
-            Destroy(this.gameObject, this.maxLifeTime);
+            Destroy(this.gameObject);
 
             //FindObjectOfType<GameManager>().PlayerDied();
         }

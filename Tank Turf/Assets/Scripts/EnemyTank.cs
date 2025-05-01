@@ -12,8 +12,10 @@ public class EnemyTank : MonoBehaviour
     private float _turnDirection;
     //public float respawnShieldTime = 3.0f;
 
+    /*
     [Header("Inscribed")]
     public Sprite[] playerTankSprites;
+    */
     //public int numPlayerTanks = 3;
 
     private void Awake()
@@ -50,27 +52,7 @@ public class EnemyTank : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        _moving = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
-
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            _turnDirection = 1.0f;
-        }   
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            _turnDirection = -1.0f;
-        }
-        else
-        {
-            _turnDirection = 0.0f;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
-        {
-            Shoot();
-        }
-        */
+        
     }
 
     private void FixedUpdate()
@@ -119,6 +101,7 @@ public class EnemyTank : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {
             //FindObjectOfType<GameManager>().AsteroidDestroyed(this);
+            //Debug.Log("Enemy tank hit by player bullet");
             Destroy(this.gameObject);
         }
     }

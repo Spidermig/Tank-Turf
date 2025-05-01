@@ -428,7 +428,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4826556159867016414, guid: d3c851531216547e59bfee8d14f700a5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 4826556159867016414, guid: d3c851531216547e59bfee8d14f700a5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -586,7 +586,6 @@ MonoBehaviour:
   enemyBulletPrefab: {fileID: -4568974991556191239, guid: 2a7fea44e70574142ae28fc6e5339df0, type: 3}
   moveSpeed: 1
   turnSpeed: 1
-  playerTankSprites: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
