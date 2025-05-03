@@ -49,6 +49,8 @@ public class Bullet : MonoBehaviour
             }
         }
 
+
+        /*
         if (collision.gameObject.CompareTag("EnemyTank"))
         {
             _rigidbody.velocity = Vector3.zero;
@@ -57,5 +59,6 @@ public class Bullet : MonoBehaviour
 
             //FindObjectOfType<GameManager>().PlayerDied();
         }
+        */
     }
 }

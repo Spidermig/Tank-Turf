@@ -92,17 +92,15 @@ public class PlayerTank : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        /*
         if (collision.gameObject.CompareTag("EnemyBullet"))
         {
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.angularVelocity = 0.0f;
+            Destroy(this.gameObject);
 
-            this.gameObject.SetActive(false);
+            //this.gameObject.SetActive(false);
 
-            FindObjectOfType<GameManager>().PlayerDied();
         }
-        */
 
         if (collision.gameObject.CompareTag("Wall"))
         {
