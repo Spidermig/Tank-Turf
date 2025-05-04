@@ -48,7 +48,14 @@ public class Bullet : MonoBehaviour
                 _rigidbody.AddForce(reflectDir * this.speed);
             }
         }
-
+        if (collision.gameObject.CompareTag("EnemyTank"))
+        {
+            Destroy(this.gameObject);
+        }
+        if (collision.gameObject.CompareTag("PlayerTank"))
+        {
+            Destroy(this.gameObject);
+        }
 
         /*
         if (collision.gameObject.CompareTag("EnemyTank"))
