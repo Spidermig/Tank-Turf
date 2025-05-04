@@ -7,6 +7,7 @@ public class PlayerTank : MonoBehaviour
     public Bullet playerBulletPrefab;
     //public Bullet enemyBulletPrefab;
     public float moveSpeed = 1.0f;
+    public int hearts = 3;
     public float turnSpeed = 1.0f;
     private Rigidbody2D _rigidbody;
     private bool _moving;
@@ -94,10 +95,13 @@ public class PlayerTank : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("EnemyBullet"))
         {
-            _rigidbody.velocity = Vector3.zero;
-            _rigidbody.angularVelocity = 0.0f;
-            Destroy(this.gameObject);
-
+            Debug.Log("I have been shot");
+            hearts -= 1;
+            if(hearts == 0) {
+                _rigidbody.velocity = Vector3.zero;
+                _rigidbody.angularVelocity = 0.0f;
+                Destroy(this.gameObject);
+            }
             //this.gameObject.SetActive(false);
 
         }
