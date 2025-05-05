@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PowerUps : MonoBehaviour
 {
+    public PlayerTank shieldCounter;
+
     [Header("Inscribed")]
     public Sprite[] powerUpSprites;
 
@@ -13,8 +15,16 @@ public class PowerUps : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject PowerUpsGO = GameObject.FindWithTag("PowerUp");
-        sRend = PowerUpsGO.AddComponent<SpriteRenderer>();
+        // Get or add SpriteRenderer
+        sRend = this.gameObject.GetComponent<SpriteRenderer>();
+        if (sRend == null)
+        {
+            sRend = this.gameObject.AddComponent<SpriteRenderer>();
+        }
+
+        // Assign PlayerTank reference
+        GameObject pTankGO = GameObject.FindWithTag("PlayerTank");
+        shieldCounter = pTankGO.GetComponent<PlayerTank>();
 
         powerUpSpriteNum = Random.Range(0, 3);
         sRend.sprite = powerUpSprites[powerUpSpriteNum];
@@ -34,7 +44,8 @@ public class PowerUps : MonoBehaviour
             }
             else if (powerUpSpriteNum == 1)
             {
-                Debug.Log("Player got Shield PowerUp!");
+                shieldCounter.shield += 1 ;
+                Debug.Log(shieldCounter.shield);
             }
             else if (powerUpSpriteNum == 2)
             {
