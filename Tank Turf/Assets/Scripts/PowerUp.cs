@@ -40,7 +40,7 @@ public class PowerUps : MonoBehaviour
             // If statements for checking what powerup this is
             if (powerUpSpriteNum == 0)
             {
-                pTank.ApplyBulletBoost(10f);
+                pTank.ApplyBulletBoost(20f);
             }
             else if (powerUpSpriteNum == 1)
             {
@@ -48,7 +48,7 @@ public class PowerUps : MonoBehaviour
             }
             else if (powerUpSpriteNum == 2)
             {
-                pTank.ApplySpeedBoost(15f);
+                pTank.ApplySpeedBoost(25f);
             }
             Destroy(this.gameObject);
         }

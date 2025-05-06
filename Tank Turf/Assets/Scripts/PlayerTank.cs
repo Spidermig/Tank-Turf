@@ -97,10 +97,25 @@ public class PlayerTank : MonoBehaviour
     }
     
 
-    private void Shoot()
-    {
-        Bullet playerBullet = Instantiate(this.playerBulletPrefab, this.transform.position + (transform.up * 1.0f), this.transform.rotation);
-        playerBullet.Project(this.transform.up);
+    private void Shoot(){
+        if (isBulletBoostActive){
+            // Fire 3 bullets in a spread
+            float spreadAngle = 15f; // degrees between bullets
+
+            for (int i = -1; i <= 1; i++){
+                float angle = i * spreadAngle;
+                Quaternion rotation = Quaternion.Euler(0, 0, angle);
+                Quaternion bulletRotation = this.transform.rotation * rotation;
+
+                Bullet playerBullet = Instantiate(this.playerBulletPrefab, this.transform.position + (transform.up * 1.0f), bulletRotation);
+                playerBullet.Project(bulletRotation * Vector2.up);
+            }
+        }
+        else{
+            // Normal single bullet
+            Bullet playerBullet = Instantiate(this.playerBulletPrefab, this.transform.position + (transform.up * 1.0f), this.transform.rotation);
+            playerBullet.Project(this.transform.up);
+        }
     }
 
     
