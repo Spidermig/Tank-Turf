@@ -19,6 +19,8 @@ public class PlayerTank : MonoBehaviour
     private Coroutine speedBoostCoroutine;
     private bool isSpeedBoostActive = false;
 
+    private Coroutine flashCoroutine;
+    private SpriteRenderer sRend;
 
     [Header("Inscribed")]
     public Sprite[] playerTankSprites;
@@ -42,15 +44,17 @@ public class PlayerTank : MonoBehaviour
 
     void Start()
     {
-        GameObject playerTankGO = GameObject.FindWithTag("PlayerTank");
-        SpriteRenderer sRend = playerTankGO.AddComponent<SpriteRenderer>();;
 
-        //playerTankGO = new GameObject();
-        //playerTankGO = this.GameObject();
-        //sRend = playerTankGO.AddComponent<SpriteRenderer>();
+        sRend = GetComponent<SpriteRenderer>();
+        if (sRend == null){
+            sRend = this.gameObject.AddComponent<SpriteRenderer>();
+        }
 
         int playerSpriteNum = Random.Range(0, 3);
         sRend.sprite = playerTankSprites[playerSpriteNum];
+        //playerTankGO = new GameObject();
+        //playerTankGO = this.GameObject();
+        //sRend = playerTankGO.AddComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -137,6 +141,10 @@ public class PlayerTank : MonoBehaviour
             turnSpeed *= 2;
             isSpeedBoostActive = true;
             Debug.Log("Speed PowerUp activated!");
+
+            // Start flashing
+            if (flashCoroutine != null) StopCoroutine(flashCoroutine);
+            flashCoroutine = StartCoroutine(FlashEffect());
         }
         else{
             Debug.Log("Speed PowerUp timer reset!");
@@ -158,7 +166,23 @@ public class PlayerTank : MonoBehaviour
         isSpeedBoostActive = false;
         speedBoostCoroutine = null;
 
+        // Stop flashing and reset color
+        if (flashCoroutine != null){
+            StopCoroutine(flashCoroutine);
+            flashCoroutine = null;
+        }
+        sRend.color = Color.white;
+
         Debug.Log("Speed PowerUp ended.");
+    }
+
+    private IEnumerator FlashEffect() {
+        while (true){
+            sRend.color = Color.yellow;
+            yield return new WaitForSeconds(0.2f);
+            sRend.color = Color.white;
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
 }
