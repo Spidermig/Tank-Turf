@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PowerUps : MonoBehaviour
 {
-    public PlayerTank shieldCounter;
+    public PlayerTank pTank;
 
     [Header("Inscribed")]
     public Sprite[] powerUpSprites;
@@ -24,7 +24,7 @@ public class PowerUps : MonoBehaviour
 
         // Assign PlayerTank reference
         GameObject pTankGO = GameObject.FindWithTag("PlayerTank");
-        shieldCounter = pTankGO.GetComponent<PlayerTank>();
+        pTank = pTankGO.GetComponent<PlayerTank>();
 
         powerUpSpriteNum = Random.Range(0, 3);
         sRend.sprite = powerUpSprites[powerUpSpriteNum];
@@ -44,14 +44,13 @@ public class PowerUps : MonoBehaviour
             }
             else if (powerUpSpriteNum == 1)
             {
-                shieldCounter.shield += 1 ;
-                Debug.Log(shieldCounter.shield);
+                pTank.shield += 1 ;
+                Debug.Log(pTank.shield);
             }
-            else if (powerUpSpriteNum == 2)
-            {
-                Debug.Log("Player got Speed PowerUp!");
+            else if (powerUpSpriteNum == 2){
+                // Tell the player to handle the speed boost logic
+                pTank.ApplySpeedBoost(15f);
             }
-
             Destroy(this.gameObject);
         }
     }

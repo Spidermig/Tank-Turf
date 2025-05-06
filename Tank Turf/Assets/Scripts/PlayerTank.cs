@@ -16,6 +16,10 @@ public class PlayerTank : MonoBehaviour
     private float _turnDirection;
     //public float respawnShieldTime = 3.0f;
 
+    private Coroutine speedBoostCoroutine;
+    private bool isSpeedBoostActive = false;
+
+
     [Header("Inscribed")]
     public Sprite[] playerTankSprites;
     //public int numPlayerTanks = 3;
@@ -85,6 +89,10 @@ public class PlayerTank : MonoBehaviour
             _rigidbody.AddTorque(_turnDirection * this.turnSpeed);
         }
     }
+    
+    // public void UpdateSpeed(){
+        
+    // }
 
     private void Shoot()
     {
@@ -122,4 +130,35 @@ public class PlayerTank : MonoBehaviour
             //FindObjectOfType<GameManager>().PlayerDied();
         }
     }
+
+    public void ApplySpeedBoost(float duration){
+        if (!isSpeedBoostActive){
+            moveSpeed *= 5;
+            turnSpeed *= 2;
+            isSpeedBoostActive = true;
+            Debug.Log("Speed PowerUp activated!");
+        }
+        else{
+            Debug.Log("Speed PowerUp timer reset!");
+        }
+
+        // Reset timer if already running
+        if (speedBoostCoroutine != null){
+            StopCoroutine(speedBoostCoroutine);
+        }
+
+        speedBoostCoroutine = StartCoroutine(ResetSpeedAfterTime(duration));
+    }
+
+    private IEnumerator ResetSpeedAfterTime(float seconds){
+        yield return new WaitForSeconds(seconds);
+
+        moveSpeed /= 5;
+        turnSpeed /= 2;
+        isSpeedBoostActive = false;
+        speedBoostCoroutine = null;
+
+        Debug.Log("Speed PowerUp ended.");
+    }
+
 }
