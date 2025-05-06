@@ -4,16 +4,29 @@ using UnityEngine;
 
 public class PowerUps : MonoBehaviour
 {
+    public PlayerTank pTank;
+
     [Header("Inscribed")]
     public Sprite[] powerUpSprites;
+
+    private int powerUpSpriteNum;
+    private SpriteRenderer sRend;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject PowerUpsGO = GameObject.FindWithTag("PowerUp");
-        SpriteRenderer sRend = PowerUpsGO.AddComponent<SpriteRenderer>();;
+        // Get or add SpriteRenderer
+        sRend = this.gameObject.GetComponent<SpriteRenderer>();
+        if (sRend == null)
+        {
+            sRend = this.gameObject.AddComponent<SpriteRenderer>();
+        }
 
-        int powerUpSpriteNum = Random.Range(0, 3);
+        // Assign PlayerTank reference
+        GameObject pTankGO = GameObject.FindWithTag("PlayerTank");
+        pTank = pTankGO.GetComponent<PlayerTank>();
+
+        powerUpSpriteNum = Random.Range(0, 3);
         sRend.sprite = powerUpSprites[powerUpSpriteNum];
     }
 
@@ -24,6 +37,19 @@ public class PowerUps : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision){
         if (collision.gameObject.CompareTag("PlayerTank")){
+            // If statements for checking what powerup this is
+            if (powerUpSpriteNum == 0)
+            {
+                pTank.ApplyBulletBoost(20f);
+            }
+            else if (powerUpSpriteNum == 1)
+            {
+                pTank.ApplyShieldBoost();
+            }
+            else if (powerUpSpriteNum == 2)
+            {
+                pTank.ApplySpeedBoost(25f);
+            }
             Destroy(this.gameObject);
         }
     }

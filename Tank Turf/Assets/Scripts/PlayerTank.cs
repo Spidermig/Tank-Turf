@@ -7,11 +7,22 @@ public class PlayerTank : MonoBehaviour
     public Bullet playerBulletPrefab;
     //public Bullet enemyBulletPrefab;
     public float moveSpeed = 1.0f;
+    public int hearts = 3;
+
+    public int shield = 0;
     public float turnSpeed = 1.0f;
     private Rigidbody2D _rigidbody;
     private bool _moving;
     private float _turnDirection;
     //public float respawnShieldTime = 3.0f;
+
+    private Coroutine speedBoostCoroutine;
+    private bool isSpeedBoostActive = false;
+    private bool isShieldBoostActive = false;
+    private bool isBulletBoostActive = false;
+
+    private Coroutine flashCoroutine;
+    private SpriteRenderer sRend;
 
     [Header("Inscribed")]
     public Sprite[] playerTankSprites;
@@ -35,15 +46,17 @@ public class PlayerTank : MonoBehaviour
 
     void Start()
     {
-        GameObject playerTankGO = GameObject.FindWithTag("PlayerTank");
-        SpriteRenderer sRend = playerTankGO.AddComponent<SpriteRenderer>();;
 
-        //playerTankGO = new GameObject();
-        //playerTankGO = this.GameObject();
-        //sRend = playerTankGO.AddComponent<SpriteRenderer>();
+        sRend = GetComponent<SpriteRenderer>();
+        if (sRend == null){
+            sRend = this.gameObject.AddComponent<SpriteRenderer>();
+        }
 
         int playerSpriteNum = Random.Range(0, 3);
         sRend.sprite = playerTankSprites[playerSpriteNum];
+        //playerTankGO = new GameObject();
+        //playerTankGO = this.GameObject();
+        //sRend = playerTankGO.AddComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -82,11 +95,27 @@ public class PlayerTank : MonoBehaviour
             _rigidbody.AddTorque(_turnDirection * this.turnSpeed);
         }
     }
+    
 
-    private void Shoot()
-    {
-        Bullet playerBullet = Instantiate(this.playerBulletPrefab, this.transform.position + (transform.up * 1.0f), this.transform.rotation);
-        playerBullet.Project(this.transform.up);
+    private void Shoot(){
+        if (isBulletBoostActive){
+            // Fire 3 bullets in a spread
+            float spreadAngle = 15f; // degrees between bullets
+
+            for (int i = -1; i <= 1; i++){
+                float angle = i * spreadAngle;
+                Quaternion rotation = Quaternion.Euler(0, 0, angle);
+                Quaternion bulletRotation = this.transform.rotation * rotation;
+
+                Bullet playerBullet = Instantiate(this.playerBulletPrefab, this.transform.position + (transform.up * 1.0f), bulletRotation);
+                playerBullet.Project(bulletRotation * Vector2.up);
+            }
+        }
+        else{
+            // Normal single bullet
+            Bullet playerBullet = Instantiate(this.playerBulletPrefab, this.transform.position + (transform.up * 1.0f), this.transform.rotation);
+            playerBullet.Project(this.transform.up);
+        }
     }
 
     
@@ -94,12 +123,27 @@ public class PlayerTank : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("EnemyBullet"))
         {
-            _rigidbody.velocity = Vector3.zero;
-            _rigidbody.angularVelocity = 0.0f;
-            Destroy(this.gameObject);
+            Debug.Log("I have been shot");
+            shield -= 1;
+            Debug.Log("1 Shield lost!");
 
-            //this.gameObject.SetActive(false);
+            if(shield <= 0){
+                
+                if (isShieldBoostActive){
+                    isShieldBoostActive = false;
+                    Debug.Log("Shield PowerUp ended (shield broken).");
+                    StopFlashingIfNoPowerups();
+                }
 
+                hearts -= 1;
+                Debug.Log("No shields left!");
+                if(hearts == 0) {
+                    _rigidbody.velocity = Vector3.zero;
+                    _rigidbody.angularVelocity = 0.0f;
+                    Destroy(this.gameObject);
+                }
+                //this.gameObject.SetActive(false);
+            }
         }
 
         if (collision.gameObject.CompareTag("Wall"))
@@ -110,6 +154,85 @@ public class PlayerTank : MonoBehaviour
             //this.gameObject.SetActive(false);
 
             //FindObjectOfType<GameManager>().PlayerDied();
+        }
+    }
+
+    public void ApplySpeedBoost(float duration){
+        isSpeedBoostActive = true;
+
+        moveSpeed *= 5;
+        turnSpeed *= 2;
+        Debug.Log("Speed PowerUp activated!");
+
+        // Start flashing if not already
+        StartFlashing();
+
+        // Reset timer
+        if (speedBoostCoroutine != null){
+            StopCoroutine(speedBoostCoroutine);
+        }
+        speedBoostCoroutine = StartCoroutine(ResetSpeedAfterTime(duration));
+    }
+
+    private IEnumerator ResetSpeedAfterTime(float seconds){
+        yield return new WaitForSeconds(seconds);
+        
+        moveSpeed /= 5;
+        turnSpeed /= 2;
+        isSpeedBoostActive = false;
+        speedBoostCoroutine = null;
+
+        Debug.Log("Speed PowerUp ended.");
+        StopFlashingIfNoPowerups();
+    }
+    public void ApplyShieldBoost(){
+        isShieldBoostActive = true;
+        shield += 1;
+        Debug.Log("Shield PowerUp activated!");
+
+        StartFlashing();
+    }
+    
+    public void ApplyBulletBoost(float duration){
+        isBulletBoostActive = true;
+        Debug.Log("Bullet PowerUp activated!");
+
+        StartFlashing();
+
+        StartCoroutine(ResetBulletAfterTime(duration));
+    }
+    private IEnumerator ResetBulletAfterTime(float seconds){
+        yield return new WaitForSeconds(seconds);
+
+        isBulletBoostActive = false;
+
+        Debug.Log("Bullet PowerUp ended.");
+        StopFlashingIfNoPowerups();
+    }
+
+    private IEnumerator FlashEffect(){
+        Color flashColor = Color.yellow;
+
+        while (true){
+            sRend.color = flashColor;
+            yield return new WaitForSeconds(0.2f);
+            sRend.color = Color.white;
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+    private void StartFlashing(){
+        if (flashCoroutine == null){
+            flashCoroutine = StartCoroutine(FlashEffect());
+        }
+    }
+
+    private void StopFlashingIfNoPowerups(){
+        if (!isSpeedBoostActive && !isShieldBoostActive && !isBulletBoostActive){
+            if (flashCoroutine != null){
+                StopCoroutine(flashCoroutine);
+                flashCoroutine = null;
+                sRend.color = Color.white; // Reset to normal color
+            }
         }
     }
 }
