@@ -40,15 +40,14 @@ public class PowerUps : MonoBehaviour
             // If statements for checking what powerup this is
             if (powerUpSpriteNum == 0)
             {
-                Debug.Log("Player got Bullet PowerUp!");
+                pTank.ApplyBulletBoost(10f);
             }
             else if (powerUpSpriteNum == 1)
             {
-                pTank.shield += 1 ;
-                Debug.Log(pTank.shield);
+                pTank.ApplyShieldBoost();
             }
-            else if (powerUpSpriteNum == 2){
-                // Tell the player to handle the speed boost logic
+            else if (powerUpSpriteNum == 2)
+            {
                 pTank.ApplySpeedBoost(15f);
             }
             Destroy(this.gameObject);

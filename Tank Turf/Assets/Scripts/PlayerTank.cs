@@ -18,6 +18,8 @@ public class PlayerTank : MonoBehaviour
 
     private Coroutine speedBoostCoroutine;
     private bool isSpeedBoostActive = false;
+    private bool isShieldBoostActive = false;
+    private bool isBulletBoostActive = false;
 
     private Coroutine flashCoroutine;
     private SpriteRenderer sRend;
@@ -94,9 +96,6 @@ public class PlayerTank : MonoBehaviour
         }
     }
     
-    // public void UpdateSpeed(){
-        
-    // }
 
     private void Shoot()
     {
@@ -112,7 +111,15 @@ public class PlayerTank : MonoBehaviour
             Debug.Log("I have been shot");
             shield -= 1;
             Debug.Log("1 Shield lost!");
+
             if(shield <= 0){
+                
+                if (isShieldBoostActive){
+                    isShieldBoostActive = false;
+                    Debug.Log("Shield PowerUp ended (shield broken).");
+                    StopFlashingIfNoPowerups();
+                }
+
                 hearts -= 1;
                 Debug.Log("No shields left!");
                 if(hearts == 0) {
@@ -136,53 +143,81 @@ public class PlayerTank : MonoBehaviour
     }
 
     public void ApplySpeedBoost(float duration){
-        if (!isSpeedBoostActive){
-            moveSpeed *= 5;
-            turnSpeed *= 2;
-            isSpeedBoostActive = true;
-            Debug.Log("Speed PowerUp activated!");
+        isSpeedBoostActive = true;
 
-            // Start flashing
-            if (flashCoroutine != null) StopCoroutine(flashCoroutine);
-            flashCoroutine = StartCoroutine(FlashEffect());
-        }
-        else{
-            Debug.Log("Speed PowerUp timer reset!");
-        }
+        moveSpeed *= 5;
+        turnSpeed *= 2;
+        Debug.Log("Speed PowerUp activated!");
 
-        // Reset timer if already running
+        // Start flashing if not already
+        StartFlashing();
+
+        // Reset timer
         if (speedBoostCoroutine != null){
             StopCoroutine(speedBoostCoroutine);
         }
-
         speedBoostCoroutine = StartCoroutine(ResetSpeedAfterTime(duration));
     }
 
     private IEnumerator ResetSpeedAfterTime(float seconds){
         yield return new WaitForSeconds(seconds);
-
+        
         moveSpeed /= 5;
         turnSpeed /= 2;
         isSpeedBoostActive = false;
         speedBoostCoroutine = null;
 
-        // Stop flashing and reset color
-        if (flashCoroutine != null){
-            StopCoroutine(flashCoroutine);
-            flashCoroutine = null;
-        }
-        sRend.color = Color.white;
-
         Debug.Log("Speed PowerUp ended.");
+        StopFlashingIfNoPowerups();
+    }
+    public void ApplyShieldBoost(){
+        isShieldBoostActive = true;
+        shield += 1;
+        Debug.Log("Shield PowerUp activated!");
+
+        StartFlashing();
+    }
+    
+    public void ApplyBulletBoost(float duration){
+        isBulletBoostActive = true;
+        Debug.Log("Bullet PowerUp activated!");
+
+        StartFlashing();
+
+        StartCoroutine(ResetBulletAfterTime(duration));
+    }
+    private IEnumerator ResetBulletAfterTime(float seconds){
+        yield return new WaitForSeconds(seconds);
+
+        isBulletBoostActive = false;
+
+        Debug.Log("Bullet PowerUp ended.");
+        StopFlashingIfNoPowerups();
     }
 
-    private IEnumerator FlashEffect() {
+    private IEnumerator FlashEffect(){
+        Color flashColor = Color.yellow;
+
         while (true){
-            sRend.color = Color.yellow;
+            sRend.color = flashColor;
             yield return new WaitForSeconds(0.2f);
             sRend.color = Color.white;
             yield return new WaitForSeconds(0.2f);
         }
     }
+    private void StartFlashing(){
+        if (flashCoroutine == null){
+            flashCoroutine = StartCoroutine(FlashEffect());
+        }
+    }
 
+    private void StopFlashingIfNoPowerups(){
+        if (!isSpeedBoostActive && !isShieldBoostActive && !isBulletBoostActive){
+            if (flashCoroutine != null){
+                StopCoroutine(flashCoroutine);
+                flashCoroutine = null;
+                sRend.color = Color.white; // Reset to normal color
+            }
+        }
+    }
 }
