@@ -216,63 +216,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1001 &329174967
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6023583879480245741, guid: 0f2d5790ac67549ad937326e8d2b9c81, type: 3}
-      propertyPath: m_Name
-      value: Maze 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739051880892335763, guid: 0f2d5790ac67549ad937326e8d2b9c81, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739051880892335763, guid: 0f2d5790ac67549ad937326e8d2b9c81, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739051880892335763, guid: 0f2d5790ac67549ad937326e8d2b9c81, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739051880892335763, guid: 0f2d5790ac67549ad937326e8d2b9c81, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739051880892335763, guid: 0f2d5790ac67549ad937326e8d2b9c81, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739051880892335763, guid: 0f2d5790ac67549ad937326e8d2b9c81, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739051880892335763, guid: 0f2d5790ac67549ad937326e8d2b9c81, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739051880892335763, guid: 0f2d5790ac67549ad937326e8d2b9c81, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739051880892335763, guid: 0f2d5790ac67549ad937326e8d2b9c81, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7739051880892335763, guid: 0f2d5790ac67549ad937326e8d2b9c81, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0f2d5790ac67549ad937326e8d2b9c81, type: 3}
 --- !u!1 &582642983
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,6 +1113,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3c851531216547e59bfee8d14f700a5, type: 3}
+--- !u!1 &1425971413 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4855324903092937023, guid: d3c851531216547e59bfee8d14f700a5, type: 3}
+  m_PrefabInstance: {fileID: 1425971412}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1443875863
 GameObject:
   m_ObjectHideFlags: 0
@@ -1181,6 +1129,7 @@ GameObject:
   - component: {fileID: 1443875866}
   - component: {fileID: 1443875865}
   - component: {fileID: 1443875864}
+  - component: {fileID: 1443875867}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1262,6 +1211,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1443875867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443875863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 940f974d87ed444988619e56ec47e428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mazes:
+  - {fileID: 6023583879480245741, guid: 0f2d5790ac67549ad937326e8d2b9c81, type: 3}
+  - {fileID: 6023583879480245741, guid: d5a594dd700374688a4696e6efb02972, type: 3}
+  - {fileID: 6023583879480245741, guid: 4908ea3b8491040f5adae11b166279f9, type: 3}
+  mazePos: {x: 0, y: 0, z: 0}
+  level: 0
+  levelMax: 0
+  shotsTaken: 0
+  maze: {fileID: 0}
+  mode: 0
+  playerTank: {fileID: 582642983}
+  enemyTank: {fileID: 1425971413}
 --- !u!1 &1864618112
 GameObject:
   m_ObjectHideFlags: 0
@@ -1580,7 +1553,6 @@ SceneRoots:
   - {fileID: 143436828}
   - {fileID: 582642984}
   - {fileID: 1425971412}
-  - {fileID: 329174967}
   - {fileID: 1132643483}
   - {fileID: 599648197}
   - {fileID: 2040805337}

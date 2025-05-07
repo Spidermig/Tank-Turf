@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerTank : MonoBehaviour
 {
+    static public bool playerTankDestroyed = false;
     public Bullet playerBulletPrefab;
     //public Bullet enemyBulletPrefab;
     public float moveSpeed = 1.0f;
@@ -26,6 +27,7 @@ public class PlayerTank : MonoBehaviour
 
     [Header("Inscribed")]
     public Sprite[] playerTankSprites;
+    
     //public int numPlayerTanks = 3;
 
     private void Awake()
@@ -46,14 +48,14 @@ public class PlayerTank : MonoBehaviour
 
     void Start()
     {
-
         sRend = GetComponent<SpriteRenderer>();
         if (sRend == null){
             sRend = this.gameObject.AddComponent<SpriteRenderer>();
         }
 
-        int playerSpriteNum = Random.Range(0, 3);
-        sRend.sprite = playerTankSprites[playerSpriteNum];
+        //int playerSpriteNum = Random.Range(0, 3);
+        sRend.sprite = playerTankSprites[GameData.selectedTankIndex];
+
         //playerTankGO = new GameObject();
         //playerTankGO = this.GameObject();
         //sRend = playerTankGO.AddComponent<SpriteRenderer>();
@@ -141,6 +143,7 @@ public class PlayerTank : MonoBehaviour
                     _rigidbody.velocity = Vector3.zero;
                     _rigidbody.angularVelocity = 0.0f;
                     Destroy(this.gameObject);
+                    PlayerTank.playerTankDestroyed = true;
                 }
                 //this.gameObject.SetActive(false);
             }

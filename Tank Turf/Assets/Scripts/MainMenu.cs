@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 // Goto file(top left corner) > build settings and then youll see all the screens and their acossiated numbers
 public class MainMenu : MonoBehaviour
 {
+    public Button tank1;
+    public Button tank2;
+    public Button tank3;
+
     public void PlayGame()
     {
         // Load the game scene (assuming it's named "GameScene")
@@ -26,12 +31,16 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadSceneAsync(0);
     }
 
-    public void actualGameScene()
+    void Start()
     {
-        //I think this is where we add what tank to load on the game screen
+        tank1.onClick.AddListener(() => tankSelectionAndStartGame(0));
+        tank2.onClick.AddListener(() => tankSelectionAndStartGame(1));
+        tank3.onClick.AddListener(() => tankSelectionAndStartGame(2));
+    }
 
-
-        // Load the game scene
+    public void tankSelectionAndStartGame(int tankID)
+    {
+        GameData.selectedTankIndex = tankID;
         SceneManager.LoadSceneAsync(2);
     }
     
