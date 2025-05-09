@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         // Load the game scene (assuming it's named "GameScene")
+        EnemyTank.enemyDone = 3;
         SceneManager.LoadSceneAsync(1);
     }
 
