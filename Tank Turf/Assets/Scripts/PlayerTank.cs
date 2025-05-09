@@ -22,6 +22,7 @@ public class PlayerTank : MonoBehaviour
     private bool isShieldBoostActive = false;
     private bool isBulletBoostActive = false;
 
+    private HealthUI healthUI;
     private Coroutine flashCoroutine;
     private SpriteRenderer sRend;
 
@@ -55,6 +56,7 @@ public class PlayerTank : MonoBehaviour
 
         //int playerSpriteNum = Random.Range(0, 3);
         sRend.sprite = playerTankSprites[GameData.selectedTankIndex];
+        healthUI = FindObjectOfType<HealthUI>();
 
         //playerTankGO = new GameObject();
         //playerTankGO = this.GameObject();
@@ -138,6 +140,7 @@ public class PlayerTank : MonoBehaviour
                 }
 
                 hearts -= 1;
+                healthUI.UpdateHearts(hearts);
                 Debug.Log("No shields left!");
                 if(hearts == 0) {
                     _rigidbody.velocity = Vector3.zero;
