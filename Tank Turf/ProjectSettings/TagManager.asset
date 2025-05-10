@@ -10,6 +10,7 @@ TagManager:
   - PlayerTank
   - Wall
   - PowerUp
+  - gameOverPanel
   layers:
   - Default
   - TransparentFX

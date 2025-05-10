@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyTank : MonoBehaviour
 {
+    static public bool enemyTankDestroyed = false;
+    static public int enemyDone = 3;
     public Bullet enemyBulletPrefab;
 
     void Start()
@@ -22,6 +24,8 @@ public class EnemyTank : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {
             Destroy(this.gameObject);
+            EnemyTank.enemyDone -= 1;
+            EnemyTank.enemyTankDestroyed = true;
         }
     }
 }
