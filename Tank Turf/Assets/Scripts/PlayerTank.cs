@@ -120,6 +120,7 @@ public class PlayerTank : MonoBehaviour
             Bullet playerBullet = Instantiate(this.playerBulletPrefab, this.transform.position + (transform.up * 1.0f), this.transform.rotation);
             playerBullet.Project(this.transform.up);
         }
+        ScoreManager.Instance.AddBullet();
     }
 
     

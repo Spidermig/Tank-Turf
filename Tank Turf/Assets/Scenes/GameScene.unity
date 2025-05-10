@@ -1042,6 +1042,7 @@ GameObject:
   - component: {fileID: 1059935192}
   - component: {fileID: 1059935194}
   - component: {fileID: 1059935193}
+  - component: {fileID: 1059935195}
   m_Layer: 5
   m_Name: Score
   m_TagString: Untagged
@@ -1165,6 +1166,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1059935191}
   m_CullTransparentMesh: 1
+--- !u!114 &1059935195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059935191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d2920fe5e76ed244b8cd22a8876bb8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 1059935193}
 --- !u!1 &1132643481
 GameObject:
   m_ObjectHideFlags: 0
@@ -1589,6 +1603,7 @@ GameObject:
   - component: {fileID: 1443875865}
   - component: {fileID: 1443875864}
   - component: {fileID: 1443875867}
+  - component: {fileID: 1443875868}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1687,6 +1702,19 @@ MonoBehaviour:
   shotsTaken: 0
   maze: {fileID: 0}
   mode: 0
+--- !u!114 &1443875868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443875863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f256e931e0af74041b1e5ed86207db90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletCount: 0
 --- !u!1 &1586192309
 GameObject:
   m_ObjectHideFlags: 0
